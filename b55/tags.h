@@ -75,7 +75,7 @@ uint32_t * get_size(uint8_t index)
 void set_data(uint8_t index, uint8_t * data)
 {
     ASSERT(index);
-    memcpy(pST_TAGS->tags[index].data, data, strlen(data));    
+    memcpy(pST_TAGS->tags[index].data, data, pST_TAGS->tags[index].size);    
 }
 
 uint8_t * get_data(uint8_t index)

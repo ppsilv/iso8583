@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "/home/pdsilva/projects/utils/utils.h"
+#include "utils.h"
 #include "tags.h"
 #include "b55.h"
 
