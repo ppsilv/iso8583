@@ -1,6 +1,7 @@
 #ifndef __TAGS_HH__
 #define __TAGS_HH__
 #include <stdint.h>
+#include <string.h>
 #include "fb55ptr.h"
 
 
@@ -9,8 +10,15 @@
 
 #define ASSERT(expr) \
     if ((expr>(MAX_TAGS-1))) \
-        return "0"
- 
+        return (uint8_t *)"0"
+
+#define ASSERTINT(expr) \
+    if ((expr>(MAX_TAGS-1))) \
+        return 0
+
+#define ASSERTVOID(expr) \
+    if ((expr>(MAX_TAGS-1))) \
+        return
 
 typedef struct{
     uint8_t     tag_code[8+1];
@@ -37,9 +45,9 @@ static ST_TAGS stb55;
 
 static void set_code(uint8_t index,uint8_t * tag_code)
 {
-        ASSERT(index);
+        ASSERTVOID(index);
         //printf("  (%s)   ",tag_code);
-        memcpy(pST_TAGS->tags[index].tag_code, tag_code, strlen(tag_code));    
+        memcpy(pST_TAGS->tags[index].tag_code, tag_code, strlen( (char *) tag_code));    
        //printf("Metodo set index [%d]: [%s] [%s]\n",index,tag_code,pST_TAGS->tags[index].tag_code);
 }
 
@@ -51,8 +59,8 @@ uint8_t * get_code(uint8_t index)
 
 void set_desc(uint8_t index, uint8_t * desc)
 {
-    ASSERT(index);
-    memcpy(pST_TAGS->tags[index].desc, desc, strlen(desc));    
+    ASSERTVOID(index);
+    memcpy(pST_TAGS->tags[index].desc, desc, strlen((char *)desc));    
 }
 
 uint8_t * get_desc(uint8_t index)
@@ -63,18 +71,18 @@ uint8_t * get_desc(uint8_t index)
 
 void set_size(uint8_t index, uint32_t size)
 {
-    ASSERT(index);
+    ASSERTVOID(index);
     pST_TAGS->tags[index].size = size;    
 }
 
-uint32_t * get_size(uint8_t index)
+uint32_t  get_size(uint8_t index)
 {
-    ASSERT(index);
+    ASSERTINT(index);
     return pST_TAGS->tags[index].size;
 }
 void set_data(uint8_t index, uint8_t * data)
 {
-    ASSERT(index);
+    ASSERTVOID(index);
     memcpy(pST_TAGS->tags[index].data, data, pST_TAGS->tags[index].size);    
 }
 
@@ -89,10 +97,10 @@ void printTagTable()
     uint32_t index=0;
     printf("********************** The tags found *****************************\n");
     while( 1 ){
-        if( strlen( pST_TAGS->get_code(index) ) == 0 ){
+        if( strlen((char *) pST_TAGS->get_code(index) ) == 0 ){
             break;
         }
-        printf("Tag [% 4s] Size[%02d] value[",pST_TAGS->get_code(index), pST_TAGS->get_size(index));
+        printf("Tag [% 4s] Size[%02d] value[",(char *)pST_TAGS->get_code(index), pST_TAGS->get_size(index));
         print(pST_TAGS->get_data(index),pST_TAGS->get_size(index));
         printf("]\n");
         index++;    

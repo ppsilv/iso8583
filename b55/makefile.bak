@@ -9,8 +9,7 @@
 CC = gcc
 
 # define any compile-time flags
-#CFLAGS = -Wall -g -Wincompatible-pointer-types
-CFLAGS = -Wimplicit-int -Wincompatible-pointer-types
+CFLAGS = -Wall -g
 
 # define any directories containing header files other than /usr/include
 #
@@ -70,12 +69,3 @@ depend: $(SRCS)
 	makedepend $(INCLUDES) $^
 
 # DO NOT DELETE THIS LINE -- make depend needs it
-
-b55.o: /usr/include/stdio.h utils.h /usr/include/inttypes.h
-b55.o: /usr/include/features.h /usr/include/stdc-predef.h
-b55.o: /usr/include/stdint.h tags.h fb55ptr.h b55.h /usr/include/string.h
-b55.o: /usr/include/strings.h
-utils.o: /usr/include/stdio.h /usr/include/stdlib.h /usr/include/string.h
-utils.o: /usr/include/strings.h /usr/include/features.h
-utils.o: /usr/include/stdc-predef.h /usr/include/stdint.h utils.h
-utils.o: /usr/include/inttypes.h
